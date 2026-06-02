@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Nakuprat-Gotu Conservancy | People, Wildlife & Peace</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@0,500;0,700;1,500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #fdf7f0;
+      color: #3e3a35;
+      line-height: 1.5;
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, .serif-font {
+      font-family: 'Playfair Display', 'Cormorant Garamond', serif;
+      font-weight: 500;
+    }
+
+    :root {
+      --sand: #f5ebe0;
+      --gold: #c9a24e;
+      --deep-brown: #4a3c2c;
+      --olive: #6b705c;
+      --sunset: #d68c45;
+      --sky: #a5b5c5;
+      --dark: #2b2419;
+    }
+
+    /* Pattern divider */
+    .pattern-divider {
+      height: 24px;
+      background: repeating-linear-gradient(45deg, #c4a27a22, #c4a27a22 4px, #b9945c22 4px, #b9945c22 8px);
+      margin: 2rem auto;
+      border-radius: 20px;
+      width: 120px;
+    }
+
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    /* Navigation */
+    .navbar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
+      background: rgba(44, 34, 20, 0.85);
+      backdrop-filter: blur(12px);
+      padding: 0.8rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: all 0.3s ease;
+    }
+
+    .navbar.scrolled {
+      background: rgba(34, 25, 14, 0.95);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    }
+
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: #f3d9b1;
+      letter-spacing: 1px;
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1.8rem;
+      align-items: center;
+    }
+
+    .nav-links a {
+      color: #f5ebe0;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.95rem;
+      transition: all 0.3s;
+      position: relative;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--sunset);
+      transition: width 0.3s;
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    .nav-links a:hover {
+      color: var(--sunset);
+    }
+
+    /* Hero Section with Rotating Wildlife Backgrounds */
+    .hero {
+      position: relative;
+      height: 100vh;
+      min-height: 650px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .hero-backgrounds {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+    }
+
+    .hero-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      opacity: 0;
+      transition: opacity 1.5s ease-in-out;
+    }
+
+    .hero-bg.active {
+      opacity: 1;
+    }
+
+    .hero-bg::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.5));
+    }
+
+    .hero-bg-1 {
+      background-image: url('https://images.unsplash.com/photo-1564760055775-d63b17a55c44?q=80&w=1931&auto=format&fit=crop');
+    }
+
+    .hero-bg-2 {
+      background-image: url('https://images.unsplash.com/photo-1534567153574-2b12153a87f0?q=80&w=2070&auto=format&fit=crop');
+    }
+
+    .hero-bg-3 {
+      background-image: url('https://images.unsplash.com/photo-1501706362039-c06b2d715385?q=80&w=2070&auto=format&fit=crop');
+    }
+
+    .hero-bg-4 {
+      background-image: url('https://images.unsplash.com/photo-1546182990-dffeafbe841d?q=80&w=2059&auto=format&fit=crop');
+    }
+
+    @media (max-width: 768px) {
+      .hero-bg {
+        background-attachment: scroll;
+      }
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 900px;
+      padding: 1rem;
+      animation: fadeUp 1.2s ease;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.8rem, 8vw, 5.2rem);
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 1.5rem;
+      text-shadow: 0 4px 20px rgba(0,0,0,0.6);
+      letter-spacing: 1px;
+      color: #fff8f0;
+    }
+
+    .hero p {
+      font-size: 1.4rem;
+      font-weight: 400;
+      margin-bottom: 2.5rem;
+      font-style: italic;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.7);
+    }
+
+    /* Hero wildlife indicator dots */
+    .hero-indicators {
+      position: absolute;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 12px;
+      z-index: 2;
+    }
+
+    .hero-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.5);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: 2px solid rgba(255, 255, 255, 0.8);
+    }
+
+    .hero-dot.active {
+      background: var(--sunset);
+      border-color: #fff;
+      transform: scale(1.3);
+    }
+
+    .hero-dot:hover {
+      background: rgba(255, 255, 255, 0.8);
+    }
+
+    .btn-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.2rem;
+      justify-content: center;
+    }
+
+    .btn {
+      padding: 0.9rem 2.2rem;
+      border-radius: 50px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-size: 0.9rem;
+      transition: all 0.4s ease;
+      text-decoration: none;
+      display: inline-block;
+      border: 2px solid transparent;
+      cursor: pointer;
+      background: var(--sunset);
+      color: white;
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 2px solid white;
+      color: white;
+    }
+
+    .btn:hover {
+      background: var(--gold);
+      transform: translateY(-3px);
+      box-shadow: 0 15px 25px rgba(0,0,0,0.3);
+    }
+
+    .btn-outline:hover {
+      background: rgba(255,255,255,0.2);
+      transform: translateY(-3px);
+    }
+
+    /* Sections */
+    section {
+      padding: 5rem 0;
+    }
+
+    .section-title {
+      font-size: 2.8rem;
+      color: var(--deep-brown);
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #6b5e4b;
+      max-width: 700px;
+      margin: 0 auto 3rem;
+      font-size: 1.1rem;
+    }
+
+    /* Cards */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+    }
+
+    .card {
+      background: #fffcf5;
+      border-radius: 28px;
+      overflow: hidden;
+      box-shadow: 0 15px 30px rgba(0,0,0,0.08);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 25px 40px rgba(140, 100, 50, 0.15);
+    }
+
+    .card img {
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+      transition: 0.4s;
+    }
+
+    .card:hover img {
+      transform: scale(1.03);
+    }
+
+    .card-body {
+      padding: 1.5rem;
+    }
+
+    .card-body h3 {
+      color: var(--deep-brown);
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-counter {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--sunset);
+      font-family: 'Playfair Display', serif;
+    }
+
+    /* Gallery masonry */
+    .gallery-grid {
+      columns: 3;
+      column-gap: 1.2rem;
+    }
+
+    .gallery-item {
+      break-inside: avoid;
+      margin-bottom: 1.2rem;
+      border-radius: 24px;
+      overflow: hidden;
+      transition: all 0.3s;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .gallery-item img {
+      width: 100%;
+      display: block;
+      transition: 0.5s;
+    }
+
+    .gallery-item:hover img {
+      transform: scale(1.05);
+      filter: brightness(1.05);
+    }
+
+    /* Gallery image caption */
+    .gallery-caption {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(transparent, rgba(0,0,0,0.7));
+      color: white;
+      padding: 1.5rem 1rem 0.8rem;
+      font-size: 0.9rem;
+      font-weight: 500;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .gallery-item:hover .gallery-caption {
+      opacity: 1;
+    }
+
+    /* Testimonial */
+    .testimonial-carousel {
+      display: flex;
+      overflow-x: auto;
+      gap: 2rem;
+      padding: 1rem 0;
+      scroll-snap-type: x mandatory;
+    }
+
+    .testimonial {
+      min-width: 300px;
+      background: #faf3e9;
+      border-radius: 32px;
+      padding: 2rem;
+      scroll-snap-align: start;
+      font-style: italic;
+    }
+
+    .testimonial strong {
+      display: block;
+      margin-top: 0.8rem;
+      font-style: normal;
+      color: var(--deep-brown);
+    }
+
+    /* Lightbox */
+    .lightbox {
+      display: none;
+      position: fixed;
+      z-index: 2000;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.9);
+      justify-content: center;
+      align-items: center;
+    }
+
+    .lightbox.active {
+      display: flex;
+    }
+
+    .lightbox img {
+      max-width: 90%;
+      max-height: 90%;
+      border-radius: 16px;
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      color: white;
+      font-size: 2rem;
+      cursor: pointer;
+    }
+
+    /* Donate section */
+    .donate-section {
+      background: #4a3c2c;
+      color: #f5ebe0;
+      text-align: center;
+    }
+
+    .donate-section h2 {
+      color: #f3d9b1;
+    }
+
+    /* Footer */
+    footer {
+      background: #2b2419;
+      color: #ddceb5;
+      padding: 3rem 2rem;
+      text-align: center;
+    }
+
+    footer a {
+      color: #d68c45;
+      text-decoration: none;
+    }
+
+    /* Animations */
+    @keyframes fadeUp {
+      0% { opacity: 0; transform: translateY(30px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    .fade-in {
+      animation: fadeUp 0.8s ease forwards;
+    }
+
+    /* Mobile menu */
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      color: #f5ebe0;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    @media (max-width: 768px) {
+      .gallery-grid {
+        columns: 2;
+      }
+      .navbar {
+        flex-wrap: wrap;
+      }
+      .nav-links {
+        display: none;
+        width: 100%;
+        flex-direction: column;
+        gap: 0.8rem;
+        padding-top: 1rem;
+      }
+      .nav-links.active {
+        display: flex;
+      }
+      .mobile-menu-btn {
+        display: block;
+      }
+      .card-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="navbar" id="navbar">
+    <a href="#home" class="logo">Nakuprat-Gotu</a>
+    <button class="mobile-menu-btn" onclick="toggleMenu()">☰</button>
+    <div class="nav-links" id="navLinks">
+      <a href="#home">Home</a>
+      <a href="#about">About</a>
+      <a href="#rangers">Rangers</a>
+      <a href="#wildlife">Wildlife</a>
+      <a href="#gallery">Gallery</a>
+      <a href="#get-involved">Get Involved</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </nav>
+
+  <!-- Hero Section with Rotating Wildlife Backgrounds -->
+  <section class="hero" id="home">
+    <div class="hero-backgrounds">
+      <div class="hero-bg hero-bg-1 active" data-index="0"></div>
+      <div class="hero-bg hero-bg-2" data-index="1"></div>
+      <div class="hero-bg hero-bg-3" data-index="2"></div>
+      <div class="hero-bg hero-bg-4" data-index="3"></div>
+    </div>
+    
+    <div class="hero-content">
+      <h1>Protecting Wildlife.<br>Empowering Communities.<br>Preserving Northern Kenya.</h1>
+      <p>Where Borana, Turkana & Samburu unite for peace and nature</p>
+      <div class="btn-group">
+        <a href="#about" class="btn">Explore Conservancy</a>
+        <a href="#rangers" class="btn btn-outline">Support Our Rangers</a>
+        <a href="#gallery" class="btn btn-outline">Visit Gallery</a>
+      </div>
+    </div>
+    
+    <div class="hero-indicators">
+      <span class="hero-dot active" onclick="goToSlide(0)" title="Elephants"></span>
+      <span class="hero-dot" onclick="goToSlide(1)" title="Giraffes"></span>
+      <span class="hero-dot" onclick="goToSlide(2)" title="Zebras"></span>
+      <span class="hero-dot" onclick="goToSlide(3)" title="Lions"></span>
+    </div>
+  </section>
+
+  <!-- About / Community & Culture -->
+  <section id="about">
+    <div class="container">
+      <h2 class="section-title">Rooted in Culture, United by Peace</h2>
+      <div class="pattern-divider"></div>
+      <p class="subtitle">Borana, Turkana and Samburu traditions thrive together. From colorful shukas to beaded manyattas, our heritage shapes conservation across 39,300 hectares of community trust land.</p>
+      <div class="card-grid">
+        <div class="card">
+          <img src="https://i.postimg.cc/yN8DHLXw/20260505-100539.jpg" alt="Samburu women in traditional attire with beadwork">
+          <div class="card-body">
+            <h3>Women Empowerment</h3>
+            <p>Beadwork cooperatives and savings groups transforming livelihoods across Ngare Mara, Akunoit, and Gotu settlements.</p>
+          </div>
+        </div>
+        <div class="card">
+          <img src="https://i.postimg.cc/W1jScqWH/20260505-101411.jpg" alt="Traditional Samburu manyatta settlement">
+          <div class="card-body">
+            <h3>Manyatta Life</h3>
+            <p>Pastoralist traditions meet modern conservation — semi-nomadic communities practicing sustainable grazing for decades.</p>
+          </div>
+        </div>
+        <div class="card">
+          <img src="https://i.postimg.cc/FHscxynK/20260505-101813.jpg" alt="Samburu youth in traditional celebration">
+          <div class="card-body">
+            <h3>Peace Sports Events</h3>
+            <p>Annual inter-community games uniting Borana, Turkana & Samburu — ending cattle rustling through friendship.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Rangers Section -->
+  <section id="rangers" style="background: #f3ede5;">
+    <div class="container">
+      <h2 class="section-title">Guardians of the Rangelands</h2>
+      <div class="pattern-divider"></div>
+      <p class="subtitle">29 community rangers patrol daily, protecting wildlife corridors and building peace across 12 zones.</p>
+      <div class="card-grid">
+        <div class="card">
+          <img src="https://i.postimg.cc/mZpP7PF1/20260505-111256.jpg" alt="Nakuprat-Gotu community ranger on patrol">
+          <div class="card-body">
+            <span class="stat-counter">29+</span>
+            <h3>Community Rangers</h3>
+            <p>Daily anti-poaching patrols across 39,300 hectares, securing wildlife corridors from Shaba to Marsabit.</p>
+          </div>
+        </div>
+        <div class="card">
+          <img src="https://i.postimg.cc/C1qwDKyj/20260504-211826.jpg" alt="Wildlife protection and anti-poaching efforts">
+          <div class="card-body">
+            <span class="stat-counter">0</span>
+            <h3>Poaching Incidents (2024)</h3>
+            <p>Strengthened security teams protect elephants, lions, Grevy's zebra and Beisa oryx from poaching.</p>
+          </div>
+        </div>
+        <div class="card">
+          <img src="https://i.postimg.cc/HLfgpCJW/20260505-111737.jpg" alt="Community outreach and impact programs">
+          <div class="card-body">
+            <span class="stat-counter">12,706</span>
+            <h3>People Impacted</h3>
+            <p>Clean water projects, health outreach, adult education and livestock programs across all settlements.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Wildlife Section -->
+  <section id="wildlife">
+    <div class="container">
+      <h2 class="section-title">Wildlife We Protect</h2>
+      <div class="pattern-divider"></div>
+      <p class="subtitle">From reticulated giraffes to Grevy's zebra — our conservancy secures critical habitat and migration corridors.</p>
+      <div class="card-grid">
+        <div class="card">
+          <img src="https://images.unsplash.com/photo-1534567153574-2b12153a87f0?q=80&w=2070&auto=format&fit=crop" alt="Reticulated giraffe in northern Kenya">
+          <div class="card-body">
+            <h3>Reticulated Giraffe</h3>
+            <p>Iconic herds moving through Boji Dera, Jajaab and Shaba National Reserve corridors.</p>
+          </div>
+        </div>
+        <div class="card">
+          <img src="https://images.unsplash.com/photo-1501706362039-c06b2d715385?q=80&w=2070&auto=format&fit=crop" alt="Grevy's zebra in Kenya">
+          <div class="card-body">
+            <h3>Grevy's Zebra</h3>
+            <p>Endangered species protected in Chafa Gafarsa — one of Kenya's last strongholds.</p>
+          </div>
+        </div>
+        <div class="card">
+          <img src="https://images.unsplash.com/photo-1535941334588-3ee8d57aad8f?q=80&w=2070&auto=format&fit=crop" alt="Oryx in northern Kenya drylands">
+          <div class="card-body">
+            <h3>Beisa Oryx & Lions</h3>
+            <p>Thriving alongside ostriches and buffaloes near Kubi Obe and Kuq Mossa springs.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Gallery Section -->
+  <section id="gallery" style="background: #fdf7f0;">
+    <div class="container">
+      <h2 class="section-title">Life & Landscape Gallery</h2>
+      <div class="pattern-divider"></div>
+      <p class="subtitle">Click any image to view full-size</p>
+      <div class="gallery-grid">
+        <div class="gallery-item" onclick="openLightbox('https://i.postimg.cc/d3DWxhBn/20260505-113725.jpg')">
+          <img src="https://i.postimg.cc/d3DWxhBn/20260505-113725.jpg" alt="Nakuprat-Gotu landscape view">
+          <div class="gallery-caption">🌍 Conservancy Landscape</div>
+        </div>
+        <div class="gallery-item" onclick="openLightbox('https://i.postimg.cc/Hk8qLhQH/20260505-114023.jpg')">
+          <img src="https://i.postimg.cc/Hk8qLhQH/20260505-114023.jpg" alt="Wildlife and nature at Nakuprat-Gotu">
+          <div class="gallery-caption">🦁 Wildlife at the Conservancy</div>
+        </div>
+        <div class="gallery-item" onclick="openLightbox('https://i.postimg.cc/7hQRH36F/20260505-113809.jpg')">
+          <img src="https://i.postimg.cc/7hQRH36F/20260505-113809.jpg" alt="Conservancy life and scenery">
+          <div class="gallery-caption">🌿 Conservancy Life</div>
+        </div>
+        <div class="gallery-item" onclick="openLightbox('https://i.postimg.cc/SxKKtkFs/20260505-114138.jpg')">
+          <img src="https://i.postimg.cc/SxKKtkFs/20260505-114138.jpg" alt="Northern Kenya rangelands">
+          <div class="gallery-caption">🏞️ Northern Kenya Rangelands</div>
+        </div>
+        <div class="gallery-item" onclick="openLightbox('https://i.postimg.cc/yN8DHLXw/20260505-100539.jpg')">
+          <img src="https://i.postimg.cc/yN8DHLXw/20260505-100539.jpg" alt="Samburu women with traditional beadwork">
+          <div class="gallery-caption">👩🏾‍🤝‍👩🏿 Women Empowerment</div>
+        </div>
+        <div class="gallery-item" onclick="openLightbox('https://i.postimg.cc/W1jScqWH/20260505-101411.jpg')">
+          <img src="https://i.postimg.cc/W1jScqWH/20260505-101411.jpg" alt="Traditional manyatta village">
+          <div class="gallery-caption">🏘️ Traditional Manyatta</div>
+        </div>
+        <div class="gallery-item" onclick="openLightbox('https://i.postimg.cc/FHscxynK/20260505-101813.jpg')">
+          <img src="https://i.postimg.cc/FHscxynK/20260505-101813.jpg" alt="Peace sports and community unity">
+          <div class="gallery-caption">🤝 Peace & Unity</div>
+        </div>
+        <div class="gallery-item" onclick="openLightbox('https://i.postimg.cc/mZpP7PF1/20260505-111256.jpg')">
+          <img src="https://i.postimg.cc/mZpP7PF1/20260505-111256.jpg" alt="Community ranger protecting wildlife">
+          <div class="gallery-caption">🛡️ Community Ranger</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Mission & Vision -->
+  <section>
+    <div class="container">
+      <div class="card-grid">
+        <div class="card" style="background: #e7dcc8;">
+          <div class="card-body">
+            <h3>🌍 Our Mission</h3>
+            <p>"To protect wildlife, conserve rangelands, and empower communities through sustainable conservation and peace-building."</p>
+          </div>
+        </div>
+        <div class="card" style="background: #d6ceb8;">
+          <div class="card-body">
+            <h3>✨ Our Vision</h3>
+            <p>"A peaceful and thriving conservancy where people, wildlife, and nature coexist for future generations."</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section>
+    <div class="container">
+      <h2 class="section-title">Voices of Nakuprat-Gotu</h2>
+      <div class="pattern-divider"></div>
+      <div class="testimonial-carousel">
+        <div class="testimonial">
+          "Before the conservancy, conflict was common. Now we share grazing and protect wildlife together."
+          <strong>— Elder, Ngare Mara</strong>
+        </div>
+        <div class="testimonial">
+          "As a ranger, I track lions and stop poachers. My children see a future with animals."
+          <strong>— Community Ranger, Gotu</strong>
+        </div>
+        <div class="testimonial">
+          "Our women's group sells beads and saves money. We have a voice now."
+          <strong>— Women's Leader, Akunoit</strong>
+        </div>
+        <div class="testimonial">
+          "The peace sports brought our youth together. No more raids — we are brothers now."
+          <strong>— Youth Representative, Attan</strong>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Get Involved / Donate -->
+  <section id="get-involved" class="donate-section">
+    <div class="container">
+      <h2 class="section-title" style="color: #f3d9b1;">Support the Conservancy</h2>
+      <div class="pattern-divider" style="background: repeating-linear-gradient(45deg, #f3d9b122, #f3d9b122 4px, #d68c4522 4px, #d68c4522 8px);"></div>
+      <p style="margin:1.5rem 0; font-size:1.1rem;">Your contribution funds ranger equipment, water projects, education, and women's enterprises across 12 community zones.</p>
+      <div class="btn-group" style="justify-content: center;">
+        <a href="#" class="btn" style="background: #d68c45;" onclick="alert('Thank you for your generosity! Donation page coming soon.')">Donate Now</a>
+        <a href="#" class="btn btn-outline" style="border-color: #f5ebe0; color: #f5ebe0;" onclick="alert('Sponsor a Ranger program details will be sent to you.')">Sponsor a Ranger</a>
+        <a href="#" class="btn btn-outline" style="border-color: #f5ebe0; color: #f5ebe0;" onclick="alert('Volunteer opportunities available! Contact us for details.')">Volunteer</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact">
+    <div class="container" style="text-align: center;">
+      <h2 class="section-title">Contact the Conservancy</h2>
+      <div class="pattern-divider"></div>
+      <p><strong>Nakuprat-Gotu Community Conservancy</strong></p>
+      <p>c/o Northern Rangelands Trust, Private Bag, Isiolo 60300, Kenya</p>
+      <p>📞 <a href="tel:+254722518476">+254 0701119557</a></p>
+      <p>✉️ <a href="mailto:Nakuprat-Gotu@nrt-kenya.org">Nakuprat-Gotu@nrt-kenya.org</a></p>
+      <p style="margin-top:0.5rem;">🆘 <strong>Emergency Ranger Hotline:</strong> Available 24/7 for wildlife emergencies</p>
+      <div style="margin-top:1.5rem;">
+        <a href="#" style="margin:0 10px; color:#4a3c2c; font-size:1.8rem;"><i class="fab fa-instagram"></i></a>
+        <a href="#" style="margin:0 10px; color:#4a3c2c; font-size:1.8rem;"><i class="fab fa-facebook"></i></a>
+        <a href="#" style="margin:0 10px; color:#4a3c2c; font-size:1.8rem;"><i class="fab fa-twitter"></i></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>© 2026 Nakuprat-Gotu Conservancy. Living in harmony with nature, guided by tradition.</p>
+    <p style="font-size:0.8rem; opacity:0.8;">Partnered with <a href="#">Northern Rangelands Trust (NRT), https://powermyrobot-m.github.io/IRGCP/</a>, Isiolo County Government & USAID-REGAL-AG</p>
+  </footer>
+
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+    <span class="lightbox-close">&times;</span>
+    <img src="" alt="Gallery image" id="lightboxImg">
+  </div>
+
+  <script>
+    // Mobile menu toggle
+    function toggleMenu() {
+      document.getElementById('navLinks').classList.toggle('active');
+    }
+
+    // Navbar scroll effect
+    window.addEventListener('scroll', () => {
+      const navbar = document.getElementById('navbar');
+      if (window.scrollY > 50) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+    });
+
+    // Hero background rotation
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.hero-bg');
+    const dots = document.querySelectorAll('.hero-dot');
+    const totalSlides = slides.length;
+    let slideInterval;
+
+    function showSlide(index) {
+      slides.forEach(slide => slide.classList.remove('active'));
+      dots.forEach(dot => dot.classList.remove('active'));
+      
+      slides[index].classList.add('active');
+      dots[index].classList.add('active');
+      
+      currentSlide = index;
+    }
+
+    function nextSlide() {
+      let next = (currentSlide + 1) % totalSlides;
+      showSlide(next);
+    }
+
+    function goToSlide(index) {
+      showSlide(index);
+      clearInterval(slideInterval);
+      slideInterval = setInterval(nextSlide, 4000);
+    }
+
+    slideInterval = setInterval(nextSlide, 4000);
+
+    const heroSection = document.querySelector('.hero');
+    heroSection.addEventListener('mouseenter', () => {
+      clearInterval(slideInterval);
+    });
+
+    heroSection.addEventListener('mouseleave', () => {
+      slideInterval = setInterval(nextSlide, 4000);
+    });
+
+    // Smooth scroll for all anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        const href = this.getAttribute('href');
+        if (href === '#') return;
+        e.preventDefault();
+        const target = document.querySelector(href);
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          document.getElementById('navLinks').classList.remove('active');
+        }
+      });
+    });
+
+    // Lightbox functions
+    function openLightbox(imgSrc) {
+      document.getElementById('lightbox').classList.add('active');
+      document.getElementById('lightboxImg').src = imgSrc;
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+      document.getElementById('lightbox').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        closeLightbox();
+      }
+    });
+
+    // Intersection Observer for fade-in animations
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('fade-in');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.card, .testimonial, .gallery-item').forEach(el => {
+      el.style.opacity = '0';
+      observer.observe(el);
+      el.addEventListener('animationend', () => {
+        el.style.opacity = '1';
+      });
+    });
+  </script>
+</body>
+</html>
